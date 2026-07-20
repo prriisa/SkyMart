@@ -1,17 +1,15 @@
-import React from 'react'
-import { useContext } from 'react'
-import { MyStore } from '../context/MyContext'
-import { children } from 'react'
-import { Navigate } from 'react-router'
+import React, { useContext } from "react";
+import { Navigate, Outlet } from "react-router";
+import { MyStore } from "../context/MyContext";
 
 const PublicRouter = () => {
-    const { currentUser } = useContext(MyStore)
+  const { currentUser } = useContext(MyStore);
 
-    return (
-        <div>
-            {Object.keys(currentUser).length === 0 ? children : <Navigate to={'/home'} replace />}
-        </div>
-    )
-}
+  if (currentUser) {
+    return <Navigate to="/home" replace />;
+  }
 
-export default PublicRouter
+  return <Outlet />;
+};
+
+export default PublicRouter;

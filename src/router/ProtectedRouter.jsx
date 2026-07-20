@@ -1,15 +1,16 @@
 import { useContext } from 'react'
-import { Navigate } from 'react-router'
+import { Navigate, Outlet } from 'react-router'
 import { MyStore } from '../context/MyContext'
 
 const ProtectedRouter = ({ children }) => {
     const { currentUser } = useContext(MyStore)
 
-    
+    if (!currentUser) {
+        return <Navigate to={"/"} replace />
+    }
+
     return (
-        <div>
-            {Object.keys(currentUser).length === 0 ? <Navigate to={"/"} replace /> : children}
-        </div>
+        <Outlet />
     )
 }
 

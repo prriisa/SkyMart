@@ -4,7 +4,7 @@ export const MyStore = createContext();
 
 export const ContextProvider = ({ children }) => {
     const [allUser, setAllUser] = useState(JSON.parse(localStorage.getItem("allUser")) || [])
-    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("currentUser")) || {})
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("currentUser")) || null)
 
 
     useEffect(() => {localStorage.setItem("allUser", JSON.stringify(allUser))}, [allUser])
