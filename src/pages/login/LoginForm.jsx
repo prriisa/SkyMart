@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Zap, User, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
 import { useContext } from "react";
 import { MyStore } from "../../context/MyContext";
 
@@ -11,18 +10,23 @@ const LoginForm = () => {
   const headingFont = { fontFamily: "'Syne', sans-serif" };
   const bodyFont = { fontFamily: "'DM Sans', sans-serif" };
 
-  const {allUser, setAllUser} = useContext(MyStore)
+  const { allUser, setAllUser } = useContext(MyStore)
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({ mode: "onChange" });
   const password = watch('password')
   const navigate = useNavigate()
+  const [alreadyExist, setAlreadyExist] = useState(false)
 
 
   const registerUser = (data) => {
-    reset()
-    setAllUser((prev) => [...prev , data])
-    alert("User Registered. Kindly SignIn Again")
-    navigate("/")
+    if (allUser.find((user) => user.email == data.email)) {
+      setAlreadyExist(true)
+    } else {
+      setAllUser((prev) => [...prev, data])
+      reset()
+      alert("User Registered. Kindly SignIn Again")
+      navigate("/")
+    }
   }
 
 
@@ -155,6 +159,9 @@ const LoginForm = () => {
             Create Account <ArrowRight size={18} />
           </button>
         </form>
+
+        {alreadyExist && <p className="text-red-500 text-xs mt-4 flex justify-center">User Already Exists. Kindly SignIn.</p>}
+
 
         <p className="text-center text-white/30 text-sm mt-6">
           Already have an account?{" "}

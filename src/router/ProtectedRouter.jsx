@@ -1,15 +1,16 @@
-// import React from 'react'
-// import { Children } from 'react'
-// import { useNavigate } from 'react-router'
+import { useContext } from 'react'
+import { Navigate } from 'react-router'
+import { MyStore } from '../context/MyContext'
 
-// const ProtectedRouter = ({Children}) => {
-//     const Navigate = useNavigate()
-//     (isAdmin){
-//         return <Navigate to='/home'/>
-//     }
-//   return (
-//     {Children}
-//   )
-// }
+const ProtectedRouter = ({ children }) => {
+    const { currentUser } = useContext(MyStore)
 
-// export default ProtectedRouter
+    
+    return (
+        <div>
+            {Object.keys(currentUser).length === 0 ? <Navigate to={"/"} replace /> : children}
+        </div>
+    )
+}
+
+export default ProtectedRouter

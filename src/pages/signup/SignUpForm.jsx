@@ -1,20 +1,34 @@
 import { useState } from "react";
 import { Zap, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { MyStore } from "../../context/MyContext";
 
 const SignupForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
 
+    // styling code here
+
+    const [showPassword, setShowPassword] = useState(false);
     const headingFont = { fontFamily: "'Syne', sans-serif" };
     const bodyFont = { fontFamily: "'DM Sans', sans-serif" };
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode:"onChange" });
+    // React code starts from here
 
-    const signIn = () => {
-        handleSubmit((data) => {
+    const { allUser, setCurrentUser } = useContext(MyStore)
 
-        })
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: "onChange" });
+    const navigate = useNavigate()
+    const [WrongDet, setWrongDet] = useState(false)
+
+    const signIn = (data) => {
+        const isUser = allUser.find((singleuser) => (singleuser.email === data.email && singleuser.password === data.password))
+        if (isUser) {
+            setCurrentUser(data)
+            navigate('/home')
+        } else {
+            setWrongDet(true)
+        }
     }
 
     return (
@@ -40,7 +54,7 @@ const SignupForm = () => {
                         Enter your credentials to continue
                     </p>
 
-                    <form onSubmit={() => signIn()} className="space-y-4">
+                    <form onSubmit={handleSubmit(signIn)} className="space-y-4">
                         {/* Email */}
                         <div className="relative">
                             <Mail
@@ -105,6 +119,9 @@ const SignupForm = () => {
                         >
                             Sign in <ArrowRight size={18} />
                         </button>
+
+                        {WrongDet && <p className="text-red-500 text-xs mt-1 flex justify-center transition">Incorrect UserName or Password</p>}
+
                     </form>
 
                     <p className="text-center text-white/30 text-sm mt-6">
