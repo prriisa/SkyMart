@@ -1,7 +1,8 @@
 import React from "react";
-import Footer from "./components/Footer";
-import Dashboard from "./components/Dashboard";
-import Navbar from "./components/Navbar";
+import Footer from "./dashboard/components/Footer";
+import Dashboard from "./dashboard/Dashboard";
+import Navbar from "./Navbar";
+import { Outlet } from "react-router";
 
 const Home = () => {
   return (
@@ -20,7 +21,7 @@ const Home = () => {
       <div className="min-h-screen bg-[#0d0d0d]" style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
         <Navbar />
-        <Dashboard />
+        <Outlet/>
         <Footer />
       </div>
     </>
