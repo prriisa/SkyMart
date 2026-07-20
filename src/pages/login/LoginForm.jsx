@@ -1,21 +1,28 @@
 import { useState } from "react";
 import { Zap, User, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
+import { useContext } from "react";
+import { MyStore } from "../../context/MyContext";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const inputRef = useRef()
-
   const headingFont = { fontFamily: "'Syne', sans-serif" };
   const bodyFont = { fontFamily: "'DM Sans', sans-serif" };
 
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({ mode:"onChange" });
+  const {allUser, setAllUser} = useContext(MyStore)
+
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({ mode: "onChange" });
   const password = watch('password')
+  const navigate = useNavigate()
+
 
   const registerUser = (data) => {
-    console.log(data)
+    reset()
+    setAllUser((prev) => [...prev , data])
+    alert("User Registered. Kindly SignIn Again")
+    navigate("/")
   }
 
 
@@ -60,7 +67,6 @@ const LoginForm = () => {
               }
             })}
               type="text"
-              name="name"
               placeholder="Full name"
               className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-[#c8f400] focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
             />
@@ -84,7 +90,6 @@ const LoginForm = () => {
               }
             })}
               type="email"
-              name="email"
               placeholder="Email address"
               className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-[#c8f400] focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
             />
@@ -108,7 +113,6 @@ const LoginForm = () => {
               }
             })}
               type={showPassword ? "text" : "password"}
-              name="password"
               placeholder="Password (min 6 chars)"
               className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-[#c8f400] focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
             />
@@ -135,7 +139,6 @@ const LoginForm = () => {
                 value === password || "Passwords do not match",
             })}
               type="password"
-              name="confirm"
               placeholder="Confirm password"
               className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-[#c8f400] focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
             />

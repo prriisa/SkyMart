@@ -1,8 +1,17 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 
-export const MyStore = createContext()
+export const MyStore = createContext();
 
-export const ContextProvider = ({children}) => {
+export const ContextProvider = ({ children }) => {
+  const [allUser, setAllUser] = useState(
+    JSON.parse(localStorage.getItem("allUser")) || []
+  );
 
-    return <MyStore.Provider value={{}}>{children}</MyStore.Provider>
-}
+  useEffect(() => {
+    localStorage.setItem("allUser", JSON.stringify(allUser));
+  }, [allUser]);
+
+  return (
+    <MyStore.Provider value={{ allUser, setAllUser }}>{children}</MyStore.Provider>
+  );
+};
