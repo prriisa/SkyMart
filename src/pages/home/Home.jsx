@@ -1,8 +1,7 @@
 import React from "react";
-import Footer from "./dashboard/components/Footer";
-import Dashboard from "./dashboard/Dashboard";
-import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { Outlet } from "react-router";
+import Navbar from "./Navbar";
 
 const Home = () => {
   return (

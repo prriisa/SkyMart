@@ -8,6 +8,7 @@ import Home from '../pages/home/Home'
 import Dashboard from '../pages/home/dashboard/Dashboard'
 import About from '../pages/home/about/About'
 import Product from '../pages/home/products/Product'
+import SingleProduct from '../pages/home/products/components/SingleProduct'
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -36,8 +37,8 @@ const AppRouter = () => {
         [{
           path: "",
           element: <Home />,
-          children:[{
-            path:"",
+          children: [{
+            path: "",
             element: <Dashboard />
           },
           {
@@ -45,8 +46,12 @@ const AppRouter = () => {
             element: <About />
           },
           {
-            path:"products",
-            element:<Product/>
+            path: "products",
+            element: <Product />,
+          },
+          {
+            path: "products/:id",
+            element: <SingleProduct />
           }]
         }]
     }
