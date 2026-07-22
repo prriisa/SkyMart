@@ -2,8 +2,13 @@ import React from "react";
 import Footer from "./Footer";
 import { Outlet } from "react-router";
 import Navbar from "./Navbar";
+import { useContext } from "react";
+import { MyStore } from "../../context/MyContext";
+import Cart from "./cart/Cart";
 
 const Home = () => {
+
+  const { cartToggle } = useContext(MyStore)
   return (
     <>
       {/* Self-contained fonts + animation keyframe (no separate CSS/config file) */}
@@ -19,8 +24,10 @@ const Home = () => {
 
       <div className="min-h-screen bg-[#0d0d0d]" style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
+
+        {cartToggle ? <div className="fixed inset-0 h-screen w-screen bg-black/60 backdrop-blur-sm z-40"><Cart /></div> : null}
         <Navbar />
-        <Outlet/>
+        <Outlet />
         <Footer />
       </div>
     </>

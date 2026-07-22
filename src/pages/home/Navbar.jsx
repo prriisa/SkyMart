@@ -1,27 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Zap, ShoppingCart, LogOut, Menu } from "lucide-react";
 import { MyStore } from "../../context/MyContext";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 export default function Navbar() {
-  const { allUser, currentUser, setCurrentUser } = useContext(MyStore);
-  const userDet = allUser.find((user) => user.email === currentUser?.email);
-
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { allUser, currentUser, setCurrentUser, setCartToggle, cartItems } = useContext(MyStore);
+  const userDet = allUser.find((user) => user.email === currentUser?.email)
+  let navigate = useNavigate()
 
   return (
     <header
-      className={`sticky top-0 z-30 transition-all duration-300 bg-[#0d0d0d]/90 backdrop-blur-xl ${
-        scrolled ? "border-b border-white/8" : ""
-      }`}
+      className={`sticky top-0 z-30 transition-all duration-300 bg-[#0d0d0d]/90 backdrop-blur-xl`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
         {/* Logo */}
@@ -36,7 +25,7 @@ export default function Navbar() {
 
         {/* Nav links */}
         <nav className="hidden md:flex items-center gap-6">
-          <NavLink to="/home" className="nav-link">Home</NavLink>
+          <NavLink to="/home" className="nav-link" end>Home</NavLink>
           <NavLink to="/home/products" className="nav-link">Shop</NavLink>
           <NavLink to="/home/about" className="nav-link">About</NavLink>
         </nav>
@@ -54,8 +43,15 @@ export default function Navbar() {
             </div>
           )}
 
-          <button className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all">
-            <ShoppingCart size={18} />
+          <button
+            onClick={() => setCartToggle((prev) => !prev)}
+            className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all"
+          ><ShoppingCart size={18} />
+
+            {/* Count Badge */}
+            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-volt text-ink text-[10px] font-bold rounded-full flex items-center justify-center">
+              {cartItems.length}
+            </span>
           </button>
 
           <button

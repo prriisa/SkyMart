@@ -9,6 +9,7 @@ import Dashboard from '../pages/home/dashboard/Dashboard'
 import About from '../pages/home/about/About'
 import Product from '../pages/home/products/Product'
 import SingleProduct from '../pages/home/products/components/SingleProduct'
+import Cart from '../pages/home/cart/Cart'
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -52,6 +53,9 @@ const AppRouter = () => {
           {
             path: "products/:id",
             element: <SingleProduct />
+          },{
+            path:"cart",
+            element:<Cart/>
           }]
         }]
     }
