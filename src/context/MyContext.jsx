@@ -9,8 +9,9 @@ export const ContextProvider = ({ children }) => {
     const [allProducts, setAllProducts] = useState([]);
     const [category, setCategory] = useState("")
     const [features, setFeatures] = useState("")
-    const [cartItems, setCartItem] = useState(JSON.parse(localStorage.getItem("cartItems")) || [])
-    
+    const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem(`cart-${currentUser.email}`)) || [])
+    const [cartToggle, setCartToggle] = useState(false)
+
     const apiFetch = async () => {
         try {
             let response = await axios("https://kolzsticks.github.io/Free-Ecommerce-Products-Api/main/products.json")
@@ -22,12 +23,18 @@ export const ContextProvider = ({ children }) => {
         }
     }
 
+    const addToCart = (product) => {
+        setCartItems((prev) => [...prev, { ...product, cart: 1 }]);
+        setCartToggle(true);
+    };
+
+
     useEffect(() => { localStorage.setItem("allUser", JSON.stringify(allUser)) }, [allUser])
     useEffect(() => { localStorage.setItem("currentUser", JSON.stringify(currentUser)) }, [currentUser])
     useEffect(() => { apiFetch() }, [])
-    useEffect(() => { localStorage.setItem("cartItems", JSON.stringify(cartItems) || []) }, [cartItems])
+    useEffect(() => { localStorage.setItem(`cart-${currentUser.email}`, JSON.stringify(cartItems) || []) }, [cartItems])
 
     return (
-        <MyStore.Provider value={{ allUser, setAllUser, currentUser, setCurrentUser, allProducts, setAllProducts }}>{children}</MyStore.Provider>
+        <MyStore.Provider value={{ allUser, setAllUser, currentUser, setCurrentUser, allProducts, setAllProducts, cartToggle, setCartToggle, cartItems, setCartItems, addToCart }}>{children}</MyStore.Provider>
     );
 };
