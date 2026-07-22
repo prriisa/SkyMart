@@ -7,7 +7,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 
 const SingleProduct = () => {
-    const { allProducts } = useContext(MyStore)
+    const { allProducts, cartItems, addToCart } = useContext(MyStore)
     const { id } = useParams();
     const [currentId, setCurrentId] = useState(null)
     const [singleProduct, setSingleProduct] = useState(null)
@@ -89,7 +89,7 @@ const SingleProduct = () => {
 
                     {/* Price */}
                     <div className="py-4 border-y border-white/8">
-                        <span className="font-heading font-bold text-4xl text-volt">${singleProduct.priceCents}</span>
+                        <span className="font-heading font-bold text-4xl text-volt">${singleProduct.priceCents/100}</span>
                     </div>
 
                     {/* Description */}
@@ -97,9 +97,25 @@ const SingleProduct = () => {
 
                     {/* Buttons */}
                     <div className="flex gap-3">
-                        <button className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-bold text-base transition-all duration-200 active:scale-95 btn-volt">
-                            <ShoppingCart size={18} /> Add to Cart
-                        </button>
+                        {cartItems.find((item) => item.id === singleProduct.id) ? (
+                            // Added button (after first click)
+                            <button
+                                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-bold text-base transition-all duration-200 active:scale-95 bg-green-500/15 text-green-400 border border-green-500/20"
+                            >
+                                ✔ Added
+                            </button>
+                        ) : (
+                            // Default Add to Cart button
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    addToCart(singleProduct);
+                                }}
+                                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-bold text-base transition-all duration-200 active:scale-95 btn-volt"
+                            >
+                                <ShoppingCart size={18} /> Add to Cart
+                            </button>
+                        )}
                         <button className="p-3.5 border rounded-2xl transition-all border-white/10 text-white/30 hover:text-red-400 hover:border-red-500/30">
                             <Heart size={20} />
                         </button>
@@ -178,9 +194,20 @@ const SingleProduct = () => {
                                     </div>
                                     <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/6">
                                         <span className="font-heading font-bold text-volt text-lg">{product.priceCents}</span>
-                                        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-volt text-ink hover:bg-volt-light">
-                                            <ShoppingCart size={12} /> Add
-                                        </button>
+                                        {cartItems.find((item) => item.id === product.id) ? (
+                                            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-green-500/15 text-green-400 border border-green-500/20">
+                                                ✔ Added
+                                            </button>
+                                        ) : (
+                                            // Default Add button
+                                            <button
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    addToCart(product);
+                                                }} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-volt text-ink hover:bg-volt-light">
+                                                <ShoppingCart size={12} /> Add
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </NavLink>

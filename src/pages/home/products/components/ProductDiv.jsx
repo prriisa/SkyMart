@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ShoppingCart, Star } from "lucide-react";
 import { MyStore } from "../../../../context/MyContext";
 import { NavLink } from "react-router";
 
 const ProductDiv = ({ search, category, features }) => {
-  const { allProducts, cartItems, setCartItems } = useContext(MyStore);
+  const { allProducts, cartItems, setCartItems, setCartToggle, addToCart } = useContext(MyStore);
 
   let productsOnly = allProducts.filter(
     (item) => item.name && item.priceCents && item.image
@@ -42,13 +42,6 @@ const ProductDiv = ({ search, category, features }) => {
   };
 
   const filteredProducts = filters();
-
-  const addToCart = (product) => {
-    let inCart = cartItems.find((item) => item.id === product.id);
-    if (!inCart) {
-      setCartItems((prev) => [...prev, { ...product, cart: 1 }]);
-    }
-  };
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -105,12 +98,20 @@ const ProductDiv = ({ search, category, features }) => {
               <span className="font-heading font-bold text-volt text-lg">
                 ${product.priceCents / 100}
               </span>
-              <button
-                onClick={() => addToCart(product)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-volt text-ink hover:bg-volt-light"
-              >
-                <ShoppingCart size={12} /> Add
-              </button>
+              {cartItems.find((item) => item.id === product.id) ? (
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-green-500/15 text-green-400 border border-green-500/20">
+                  ✔ Added
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addToCart(product);
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-body transition-all duration-200 active:scale-95 bg-volt text-ink hover:bg-volt-light">
+                  <ShoppingCart size={12} /> Add
+                </button>
+              )}
             </div>
           </div>
         </NavLink>

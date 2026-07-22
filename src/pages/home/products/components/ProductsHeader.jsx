@@ -52,7 +52,7 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
+                className="absolute right-3 top-6.5 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
               >
                 <X size={13} />
               </button>
@@ -75,7 +75,7 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
             </select>
             <ChevronDown
               size={13}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none"
+              className="absolute right-3 top-6.5 -translate-y-1/2 text-white/25 pointer-events-none"
             />
           </div>
 
