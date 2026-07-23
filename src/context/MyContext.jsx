@@ -9,12 +9,7 @@ export const ContextProvider = ({ children }) => {
     const [allProducts, setAllProducts] = useState([])
     const [category, setCategory] = useState("")
     const [features, setFeatures] = useState("")
-    const [cartItems, setCartItems] = useState(() => {
-        if (currentUser && currentUser.email) {
-            return JSON.parse(localStorage.getItem(`cart-${currentUser.email}`)) || []
-        }
-        return []
-    })
+    const [cartItems, setCartItems] = useState([])
     const [cartToggle, setCartToggle] = useState(false)
 
     const apiFetch = async () => {
@@ -36,22 +31,19 @@ export const ContextProvider = ({ children }) => {
     useEffect(() => { apiFetch() }, [])
     useEffect(() => {
         if (currentUser && currentUser.email) {
+            const savedCart = JSON.parse(localStorage.getItem(`cart-${currentUser.email}`)) || []
+            setCartItems(savedCart)
+        } else {
+            setCartItems([])
+        }
+    }, [currentUser])
+    useEffect(() => {
+        if (currentUser && currentUser.email) {
             localStorage.setItem(`cart-${currentUser.email}`, JSON.stringify(cartItems))
         }
     }, [cartItems, currentUser])
 
     return (
-        <MyStore.Provider value={{
-            allUser, setAllUser,
-            currentUser, setCurrentUser,
-            allProducts, setAllProducts,
-            category, setCategory,
-            features, setFeatures,
-            cartToggle, setCartToggle,
-            cartItems, setCartItems,
-            addToCart
-        }}>
-            {children}
-        </MyStore.Provider>
+        <MyStore.Provider value={{ allUser, setAllUser, currentUser, setCurrentUser, allProducts, setAllProducts, category, setCategory, features, setFeatures, cartToggle, setCartToggle, cartItems, setCartItems, addToCart }}>{children}</MyStore.Provider>
     )
 }
