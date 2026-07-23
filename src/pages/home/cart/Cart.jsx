@@ -134,7 +134,10 @@ const Cart = () => {
             </span>
           </div>
           <button
-            onClick={() => alert("Congratulations! Your order has been placed.")}
+            onClick={() => {
+              setCartItems([])
+              alert("Congratulations! Your order has been placed.")
+            }}
             className="w-full btn-volt flex items-center justify-center gap-2 py-3 text-sm sm:text-base font-heading font-bold"
           >
             Checkout <ArrowRight size={18} />

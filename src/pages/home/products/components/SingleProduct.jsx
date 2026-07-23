@@ -11,6 +11,7 @@ const SingleProduct = () => {
     const { id } = useParams();
     const [singleProduct, setSingleProduct] = useState(null)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const [heart, setHeart] = useState(false)
 
     useEffect(() => {
         if (allProducts.length > 0) {
@@ -87,7 +88,7 @@ const SingleProduct = () => {
 
                     {/* Price */}
                     <div className="py-4 border-y border-white/8">
-                        <span className="font-heading font-bold text-4xl text-volt">${singleProduct.priceCents/100}</span>
+                        <span className="font-heading font-bold text-4xl text-volt">${singleProduct.priceCents / 100}</span>
                     </div>
 
                     {/* Description */}
@@ -114,8 +115,13 @@ const SingleProduct = () => {
                                 <ShoppingCart size={18} /> Add to Cart
                             </button>
                         )}
-                        <button className="p-3.5 border rounded-2xl transition-all border-white/10 text-white/30 hover:text-red-400 hover:border-red-500/30">
-                            <Heart size={20} />
+                        <button
+                            onClick={() => setHeart(prev => !prev)}
+                            className={`p-3.5 border rounded-2xl transition-all ${heart
+                                    ? "border-red-500/30 text-red-400 bg-red-500/10 hover:bg-red-500/20"
+                                    : "border-white/10 text-white/30 hover:text-red-400 hover:border-red-500/30"
+                                }`}>
+                            <Heart size={20} className={heart ? "fill-red-400" : ""} />
                         </button>
                     </div>
 
