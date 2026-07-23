@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { MyStore } from "../../context/MyContext";
 
-const SignupForm = () => {
+const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { allUser, setCurrentUser } = useContext(MyStore);
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
@@ -119,4 +119,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignUpForm;

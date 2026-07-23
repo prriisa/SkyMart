@@ -1,5 +1,5 @@
 import Welcome from "./Welcome";
-import SignupForm from "./SignupForm";
+import SignUpForm from "./SignUpForm";
 
 const SignUp = () => {
   return (
@@ -19,7 +19,7 @@ const SignUp = () => {
         style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
         <Welcome />
-        <SignupForm />
+        <SignUpForm />
       </div>
     </>
   );
