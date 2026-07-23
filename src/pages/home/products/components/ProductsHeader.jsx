@@ -1,30 +1,24 @@
-import React, { useContext } from "react";
-import { Search, ChevronDown, X } from "lucide-react";
-import { MyStore } from "../../../../context/MyContext";
+import React from "react"
+import { Search, ChevronDown, X } from "lucide-react"
+import { useContext } from "react"
+import { MyStore } from "../../../../context/MyContext"
 
-const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, features, search }) => {
-  const { allProducts } = useContext(MyStore);
+const ProductsHeader = ({ setCategory, setFeatures, setSearch, clearAll, category, features, search }) => {
+  const { allProducts } = useContext(MyStore)
 
-  const isCategoryActive = category && category !== "All Categories";
-  const isFeaturesActive = features && features !== "default";
-  const hasAnyFilter = Boolean(search) || isCategoryActive || isFeaturesActive;
-
-  const clearFilters = () => {
-    setCategory("All Categories");
-    setFeatures("default");
-    setSearch("");
-  };
+  const isCategoryActive = category && category !== "All Categories"
+  const isFeaturesActive = features && features !== "default"
+  const hasAnyFilter = Boolean(search) || isCategoryActive || isFeaturesActive
 
   const featureLabels = {
     "price-asc": "Price: Low → High",
     "price-desc": "Price: High → Low",
     "rating-desc": "Top Rated",
-    "rating-asc": "Lowest Rated",
-  };
+    "rating-asc": "Lowest Rated"
+  }
 
   return (
     <div className="mb-8">
-      {/* Heading */}
       <h1 className="font-heading font-bold text-3xl sm:text-4xl mb-2">All Products</h1>
       <p className="text-white/40 font-body text-sm">
         {allProducts.length} products found
@@ -33,32 +27,32 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
         )}
       </p>
 
-      {/* Filter + Search */}
       <div className="bg-[#111] border border-white/8 rounded-2xl p-4 mt-6">
         <div className="flex flex-col sm:flex-row gap-3">
+          {/* Search */}
           {/* Search */}
           <div className="relative flex-1 min-w-0">
             <Search
               size={15}
-              className="absolute left-3.5 top-6.5 -translate-y-1/2 text-white/25 pointer-events-none"
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none"
             />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               type="text"
+              style={{ paddingLeft: "2.5rem", paddingRight: "2rem" }}
               placeholder="Search products..."
               className="field pl-10 pr-8 h-10 w-full"
             />
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-3 top-6.5 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
               >
                 <X size={13} />
               </button>
             )}
           </div>
-
           {/* Category Filter */}
           <div className="relative shrink-0">
             <select
@@ -73,12 +67,8 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
               <option value="Home & Kitchen">Home & Kitchen</option>
               <option value="Health & Fitness">Health & Fitness</option>
             </select>
-            <ChevronDown
-              size={13}
-              className="absolute right-3 top-6.5 -translate-y-1/2 text-white/25 pointer-events-none"
-            />
+            <ChevronDown size={13} className="absolute right-3 top-5 -translate-y-1/2 text-white/25 pointer-events-none" />
           </div>
-
 
           {/* Sort Filter */}
           <div className="relative shrink-0">
@@ -93,16 +83,13 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
               <option value="rating-desc">Top Rated</option>
               <option value="rating-asc">Lowest Rated</option>
             </select>
-            <ChevronDown
-              size={13}
-              className="absolute right-3 top-6.5 -translate-y-1/2 text-white/25 pointer-events-none"
-            />
+            <ChevronDown size={13} className="absolute right-3 top-5 -translate-y-1/2 text-white/25 pointer-events-none" />
           </div>
 
           {/* Clear All */}
           {hasAnyFilter && (
             <button
-              onClick={clearFilters}
+              onClick={clearAll}
               className="flex items-center justify-center gap-1.5 text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/15 border border-red-500/20 px-4 h-10 rounded-2xl text-sm font-body transition-all shrink-0"
             >
               <X size={13} /> Clear
@@ -141,7 +128,7 @@ const ProductsHeader = ({ setCategory, setFeatures, setSearch, category, feature
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsHeader;
+export default ProductsHeader

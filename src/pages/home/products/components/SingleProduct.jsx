@@ -9,7 +9,6 @@ import { useEffect } from "react"
 const SingleProduct = () => {
     const { allProducts, cartItems, addToCart } = useContext(MyStore)
     const { id } = useParams();
-    const [currentId, setCurrentId] = useState(null)
     const [singleProduct, setSingleProduct] = useState(null)
     const [relatedProducts, setRelatedProducts] = useState([])
 
@@ -17,7 +16,6 @@ const SingleProduct = () => {
         if (allProducts.length > 0) {
             const pro = allProducts.find((product) => product.id == id)
             if (pro) {
-                setCurrentId(Number(id))
                 setSingleProduct(pro)
             }
         }
@@ -34,7 +32,7 @@ const SingleProduct = () => {
 
 
     if (!singleProduct) {
-        return <p className="text-white/50">Loading product...</p>
+        return <p className="text-white/50 w-screen h-70 flex justify-center items-center">No Product Found</p>
     }
 
     return (
@@ -143,14 +141,14 @@ const SingleProduct = () => {
                     {/* Navigation */}
                     <div className="flex gap-3 mt-6">
                         <NavLink
-                            to={`/home/products/${currentId === 1 ? 50 : currentId - 1}`}
+                            to={`/home/products/${Number(id) === 1 ? 50 : Number(id) - 1}`}
                             className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 hover:bg-white/15 border border-white/10 rounded-2xl transition-all text-white text-sm font-body"
                         >
                             ← Previous
                         </NavLink>
 
                         <NavLink
-                            to={`/home/products/${currentId === 50 ? 1 : currentId + 1}`}
+                            to={`/home/products/${Number(id) === 50 ? 1 : Number(id) + 1}`}
                             className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-volt hover:bg-volt-light text-ink border border-volt rounded-2xl transition-all font-heading font-semibold text-sm"
                         >
                             Next →
