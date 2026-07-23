@@ -86,13 +86,13 @@ const LoginForm = () => {
               {...register("password", {
                 required: { value: true, message: "Password is required" },
                 pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_])[A-Za-z\d@$!%*?&.#_]{8,}$/,
-                  message: "Enter a Valid Password",
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$/,
+                  message: "Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character (@$!%*?&.#).",
                 },
               })}
-              type={showPassword ? "text" : "password"}
-              placeholder="Password (min 6 chars)"
-              className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-volt focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password (min 6 chars)"
+            className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-volt focus:bg-white/10 focus:shadow-[0_0_0_2px_rgba(200,244,0,0.2)]"
             />
             <button
               type="button"

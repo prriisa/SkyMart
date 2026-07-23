@@ -8,7 +8,7 @@ import Cart from "./cart/Cart";
 
 const Home = () => {
 
-  const { cartToggle } = useContext(MyStore)
+  const { cartToggle, setCartToggle } = useContext(MyStore)
   return (
     <>
       {/* Self-contained fonts + animation keyframe (no separate CSS/config file) */}
@@ -22,10 +22,21 @@ const Home = () => {
       `}</style>
 
 
-      <div className="min-h-screen bg-[#0d0d0d]" style={{ fontFamily: "'DM Sans', sans-serif" }}
+      <div className="min-h-screen bg-\[#0d0d0d]" style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
 
-        {cartToggle ? <div className="fixed inset-0 h-screen w-screen bg-black/60 backdrop-blur-sm z-40"><Cart /></div> : null}
+        {cartToggle && (
+          <>
+            {/* Backdrop only for sm+ screens */}
+            <div
+              className="hidden sm:block fixed inset-0 h-screen w-screen bg-black/60 backdrop-blur-sm z-40"
+              onClick={() => setCartToggle(false)}
+            />
+
+            {/* Cart Sidebar */}
+            <Cart />
+          </>
+        )}
         <Navbar />
         <Outlet />
         <Footer />
